@@ -4,6 +4,7 @@ package com.yellow.service;
 import com.yellow.domain.AppResponse;
 import com.yellow.domain.PostDtoIn;
 import com.yellow.domain.PostDtoOut;
+import com.yellow.domain.PostHeader;
 import com.yellow.exception.AppException;
 import com.yellow.model.Category;
 import com.yellow.model.Post;
@@ -111,5 +112,11 @@ public class PostService {
     return new PostDtoOut(post);
   }
 
+  public List<PostHeader> getHeaders(String match, Pageable pageable) {
+    Page<Post> postPage = postRepository.findByHeaderContaining(match, pageable);
+    return postPage.getContent().stream()
+        .map(p -> new PostHeader(p))
+        .collect(Collectors.toList());
+  }
 
 }

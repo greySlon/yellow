@@ -24,4 +24,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   @Query("select p from Post p where p.mainPost = true")
   Optional<Post> getMainPost();
+
+  Page<Post> findByHeaderContaining(String part, Pageable pageable);
 }

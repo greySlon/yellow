@@ -1,6 +1,9 @@
 package com.yellow.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import com.yellow.domain.PostDtoIn;
+import com.yellow.domain.PostHeader;
 import com.yellow.photo.Picture;
 import com.yellow.photo.PictureService;
 import com.yellow.service.PostService;
@@ -57,5 +60,11 @@ public class AdminController {
   public Page<Picture> getPicsByAltMatch(@RequestParam(name = "match") String match,
       Pageable pageable) {
     return pictureService.findByPartialAlt(match, pageable);
+  }
+
+  @RequestMapping(value = "/posts/get/by_match", method = POST)
+  public List<PostHeader> getHeaders(@RequestParam(name = "match") String match,
+      Pageable pageable) {
+    return postService.getHeaders(match, pageable);
   }
 }

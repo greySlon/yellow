@@ -3,16 +3,12 @@ package com.yellow.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import com.yellow.domain.AppResponse;
-import com.yellow.domain.PostDtoIn;
 import com.yellow.domain.PostDtoOut;
-import com.yellow.model.Post;
 import com.yellow.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,7 +27,7 @@ public class PostController {
 
   @RequestMapping(value = "/non-category/{page}", method = GET)
   public AppResponse getPosts(@PathVariable("page") Integer page) {
-    return postService.getPostsNonCategory( page);
+    return postService.getPostsNonCategory(page);
   }
 
   @RequestMapping(value = "/main", method = GET)
@@ -39,8 +35,8 @@ public class PostController {
     return postService.getMainPost();
   }
 
-  @RequestMapping(value = "/{id}")
-  public PostDtoOut GetOnePost(@PathVariable("id")Long id){
+  @RequestMapping(value = "/{id}", method = GET)
+  public PostDtoOut GetOnePost(@PathVariable("id") Long id) {
     return postService.getOnePost(id);
   }
 }
