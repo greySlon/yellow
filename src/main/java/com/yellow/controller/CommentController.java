@@ -33,4 +33,5 @@ public class CommentController {
   public void addComment(@RequestBody CommentDtoIn commentDtoIn) {
     commentService.addComment(commentDtoIn);
   }
+  // todo delete comment
 }

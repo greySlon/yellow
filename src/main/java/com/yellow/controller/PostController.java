@@ -33,13 +33,10 @@ public class PostController {
     return postService.getPostsNonCategory( page);
   }
 
-  @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public void create(@RequestBody PostDtoIn postDtoIn) {
-    postService.addNewPost(postDtoIn);
-  }
-
   @RequestMapping(value = "/main", method = GET)
   public PostDtoOut getMain() {
     return postService.getMainPost();
   }
+
+  //todo get one post
 }

@@ -1,12 +1,15 @@
 package com.yellow.controller;
 
+import com.yellow.domain.PostDtoIn;
 import com.yellow.photo.Picture;
 import com.yellow.photo.PictureService;
 
+import com.yellow.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +26,13 @@ public class AdminController {
 
   @Autowired
   private PictureService pictureService;
+  @Autowired
+  private PostService postService;
+
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public void create(@RequestBody PostDtoIn postDtoIn) {
+    postService.addNewPost(postDtoIn);
+  }
 
   @RequestMapping(value = "/upload", method = RequestMethod.POST)
   public void upload(
