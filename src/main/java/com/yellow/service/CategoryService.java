@@ -1,5 +1,6 @@
 package com.yellow.service;
 
+import com.yellow.exception.AppException;
 import com.yellow.model.Category;
 import com.yellow.repository.CategoryRepository;
 
@@ -14,7 +15,13 @@ public class CategoryService {
   @Autowired
   private CategoryRepository categoryRepository;
 
+  public Category findCategory(String categoryName) {
+    return categoryRepository.getByName(categoryName).orElseThrow(
+        () -> new AppException("category not found")
+    );
+  }
+
   public List<Category> getCategories() {
-    return categoryRepository.getAll();
+    return categoryRepository.findAll();
   }
 }

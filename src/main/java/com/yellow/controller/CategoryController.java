@@ -17,7 +17,7 @@ public class CategoryController {
   @Autowired
   private CategoryService categoryService;
 
-  @RequestMapping(name = "/category/all", method = GET)
+  @RequestMapping(value = "/category/all", method = GET)
   public List<Category> getCategories() {
     return categoryService.getCategories();
   }
