@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   Optional<Post> getById(Long posId);
 
-  @Query("select p from Post p where p.category =?1 order by  p.time")
+  @Query("select p from Post p where p.category =?1 and p.mainPost= false order by  p.time")
   Page<Post> getPosts(Category category, Pageable pageable);
 
   @Query("select p from Post p where p.mainPost = true")
