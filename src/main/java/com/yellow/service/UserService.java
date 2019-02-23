@@ -4,9 +4,11 @@ import com.yellow.domain.UserDto;
 import com.yellow.exception.AppException;
 import com.yellow.model.User;
 import com.yellow.repository.UserRepository;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,12 +24,10 @@ public class UserService {
     String firstName = userDto.getFirstName();
     String lastName = userDto.getLastame();
     String password = userDto.getPassword();
-
     Optional<User> allByLogin = userRepository.getAllByLogin(login);
     if (allByLogin.isPresent()) {
       throw new AppException("User already exist!!!");
     }
-
     user.setLogin(login);
     user.setFirstName(firstName);
     user.setLastName(lastName);
@@ -36,5 +36,7 @@ public class UserService {
     userRepository.save(user);
   }
 
-
+  public User getUser(Long userId) {
+    return userRepository.getById(userId).orElseThrow(() -> new AppException("user not found"));
+  }
 }

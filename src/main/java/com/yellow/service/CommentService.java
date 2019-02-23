@@ -2,6 +2,7 @@ package com.yellow.service;
 
 import com.yellow.domain.AppResponse;
 import com.yellow.domain.CommentDto;
+import com.yellow.domain.CommentDtoIn;
 import com.yellow.model.Comment;
 import com.yellow.model.Post;
 import com.yellow.model.User;
@@ -15,12 +16,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
 
+  @Autowired
+  private UserService userService;
   @Autowired
   private CommentRepository commentRepository;
   @Autowired
@@ -50,5 +54,21 @@ public class CommentService {
     AppResponse appResponse = new AppResponse();
     appResponse.put("comments", collect);
     return appResponse;
+  }
+
+  public void addComment(CommentDtoIn commentDtoIn) {
+    Long postId = commentDtoIn.getPostId();
+    Long userId = commentDtoIn.getUserId();
+    String text = commentDtoIn.getText();
+
+    Post post = postService.findPost(postId);
+    User user = userService.getUser(userId);
+
+    Comment comment = new Comment();
+    comment.setCreated(LocalDateTime.now());
+    comment.setText(text);
+    comment.setUser(user);
+    comment.setPost(post);
+    commentRepository.save(comment);
   }
 }

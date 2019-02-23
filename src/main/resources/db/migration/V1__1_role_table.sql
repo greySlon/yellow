@@ -44,7 +44,6 @@ CREATE TABLE post
   id          BIGINT AUTO_INCREMENT
     PRIMARY KEY,
   created     DATETIME     NULL,
-  text        TEXT         NOT NULL,
   content     TEXT         NOT NULL,
   header      VARCHAR(255) NOT NULL,
   main_post   BIT          NOT NULL,
