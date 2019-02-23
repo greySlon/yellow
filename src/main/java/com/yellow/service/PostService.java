@@ -11,6 +11,7 @@ import com.yellow.photo.Picture;
 import com.yellow.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,30 +30,35 @@ public class PostService {
   private CategoryService categoryService;
   @Autowired
   private CommentService commentService;
+  @Value("${app.post-per-page}")
+  private Integer postPerPage;
 
   public AppResponse getPosts(String categoryName, Integer pageNumber) {
     Category category = categoryService.findCategory(categoryName);
-    Pageable pageable = new PageRequest(pageNumber, 10);
+    Pageable pageable = new PageRequest(pageNumber, postPerPage);
     Page<Post> page = postRepository.getPosts(category, pageable);
     List<Post> posts = page.getContent();
     Integer total = page.getTotalPages();
 
     List<PostDtoOut> collect = posts.stream()
-        .map(p -> {
-          PostDtoOut postDtoOut = new PostDtoOut();
-          postDtoOut.setHeader(p.getHeader());
-          postDtoOut.setPostId(p.getId());
-          Picture postImage = p.getPostImage();
-          String postPicture = postImage == null ? null : postImage.getName();
-          postDtoOut.setPostPicture(postPicture);
-          return postDtoOut;
-        })
+        .map(p -> new PostDtoOut(p))
         .collect(Collectors.toList());
 
     AppResponse appResponse = new AppResponse();
     appResponse.put("posts", collect);
     appResponse.put("total_pages", total);
     return appResponse;
+  }
+
+
+  public AppResponse getPostsNonCategory(Integer pageNumber) {
+    Pageable pageable = new PageRequest(pageNumber, postPerPage);
+    Page<Post> page = postRepository.getPostsNonCategorized(pageable);
+    List<Post> posts = page.getContent();
+    List<PostDtoOut> collect = posts.stream()
+        .map(p -> new PostDtoOut(p))
+        .collect(Collectors.toList());
+    return null;
   }
 
   public PostDtoOut getMainPost() {
@@ -93,4 +99,5 @@ public class PostService {
   public Post findPost(Long postId) {
     return postRepository.getById(postId).orElseThrow(() -> new AppException("no post found"));
   }
+
 }

@@ -1,11 +1,15 @@
 package com.yellow.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yellow.model.Post;
+import com.yellow.photo.Picture;
 
 
 @Data
 public class PostDtoOut {
+
   @JsonProperty(value = "id")
   private Long postId;
   @JsonProperty(value = "title")
@@ -15,5 +19,16 @@ public class PostDtoOut {
   @JsonProperty(value = "post")
   private String content;
 
+  public PostDtoOut() {
+  }
+
+  public PostDtoOut(Post post) {
+    PostDtoOut postDtoOut = new PostDtoOut();
+    postDtoOut.setHeader(post.getHeader());
+    postDtoOut.setPostId(post.getId());
+    Picture postImage = post.getPostImage();
+    String postPicture = postImage == null ? null : postImage.getName();
+    postDtoOut.setPostPicture(postPicture);
+  }
 }
 

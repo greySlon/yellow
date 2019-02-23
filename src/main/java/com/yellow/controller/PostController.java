@@ -27,6 +27,11 @@ public class PostController {
     return postService.getPosts(categoryName, page);
   }
 
+  @RequestMapping(value = "/post/non-category", method = GET)
+  public AppResponse getPosts(@PathVariable("page") Integer page) {
+    return postService.getPostsNonCategory( page);
+  }
+
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public void create(@RequestBody PostDtoIn postDtoIn) {
     postService.addNewPost(postDtoIn);
