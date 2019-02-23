@@ -32,4 +32,8 @@ public class PostController {
     postService.addNewPost(postDtoIn);
   }
 
+  @RequestMapping(value = "/post/main", method = GET)
+  public PostDtoOut getMain() {
+    return postService.getMainPost();
+  }
 }
