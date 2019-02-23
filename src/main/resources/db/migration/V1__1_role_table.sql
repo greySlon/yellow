@@ -84,5 +84,14 @@ CREATE INDEX FK8kcum44fvpupyw6f5baccx25c
 CREATE INDEX FKs1slvnkuemjsq2kj4h3vhx7i1
   ON comment (post_id);
 
+INSERT INTO category (id, name) VALUES (1, 'Category-1');
+INSERT INTO category (id, name) VALUES (2, 'Category-2');
+INSERT INTO category (id, name) VALUES (3, 'Category-3');
+INSERT INTO category (id, name) VALUES (4, 'Category-4');
+INSERT INTO category (id, name) VALUES (5, 'Category-5');
+INSERT INTO category (id, name) VALUES (6, 'Category-6');
+INSERT INTO category (id, name) VALUES (7, 'Category-7');
 
-
+INSERT INTO picture (id, attr_alt, name) VALUES (1, 'img 1','image-1.jpg');
+INSERT INTO picture (id, attr_alt, name) VALUES (2, 'img 1','image-2.jpg');
+INSERT INTO picture (id, attr_alt, name) VALUES (3, 'img 1','image-3.jpg');

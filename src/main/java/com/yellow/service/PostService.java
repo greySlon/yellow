@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,7 @@ public class PostService {
     post.setSnippet(snippet);
     post.setCategory(category);
     post.setMainPost(main);
+    post.setTime(LocalDateTime.now());
 
     postRepository.save(post);
   }
