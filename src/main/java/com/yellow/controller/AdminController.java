@@ -8,6 +8,7 @@ import com.yellow.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/photo")
+@RequestMapping(value = "/secured-api")
 public class AdminController {
 
   @Autowired
@@ -34,7 +35,7 @@ public class AdminController {
     postService.addNewPost(postDtoIn);
   }
 
-  @RequestMapping(value = "/upload", method = RequestMethod.POST)
+  @RequestMapping(value = "/photo/upload", method = RequestMethod.POST)
   public void upload(
       @RequestParam("file") List<MultipartFile> files,
       @RequestParam(name = "alt") String description,
@@ -52,7 +53,7 @@ public class AdminController {
     }
   }
 
-  @RequestMapping(value = "/get/by_match", method = RequestMethod.POST)
+  @RequestMapping(value = "/photo/get/by_match", method = RequestMethod.POST)
   @ResponseBody
   public Page<Picture> getPicsByAltMatch(@RequestParam(name = "match") String match,
       Pageable pageable) {
