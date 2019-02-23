@@ -76,8 +76,10 @@ public class PostService {
     String header = postDtoIn.getHeader();
     String content = postDtoIn.getContent();
     String snippet = postDtoIn.getSnippet();
-    Category category = postDtoIn.getCategory();
+    String categoryName = postDtoIn.getCategory();
     Boolean main = postDtoIn.getMain();
+    Category category = categoryService.findCategory(categoryName);
+
     post.setHeader(header);
     post.setContent(content);
     post.setSnippet(snippet);
