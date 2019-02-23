@@ -15,19 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/post")
 public class PostController {
 
   @Autowired
   private PostService postService;
 
-  @RequestMapping(value = "/post/{category}/{page}", method = GET)
+  @RequestMapping(value = "/{category}/{page}", method = GET)
   public AppResponse getPosts(
       @PathVariable("category") String categoryName,
       @PathVariable("page") Integer page) {
     return postService.getPosts(categoryName, page);
   }
 
-  @RequestMapping(value = "/post/non-category", method = GET)
+  @RequestMapping(value = "/non-category", method = GET)
   public AppResponse getPosts(@PathVariable("page") Integer page) {
     return postService.getPostsNonCategory( page);
   }
@@ -37,7 +38,7 @@ public class PostController {
     postService.addNewPost(postDtoIn);
   }
 
-  @RequestMapping(value = "/post/main", method = GET)
+  @RequestMapping(value = "/main", method = GET)
   public PostDtoOut getMain() {
     return postService.getMainPost();
   }
