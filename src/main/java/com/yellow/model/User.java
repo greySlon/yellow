@@ -2,16 +2,16 @@ package com.yellow.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import com.yellow.photo.Picture;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import lombok.Data;
+
+import com.yellow.photo.Picture;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,8 +32,7 @@ public class User {
   private Boolean enabled;
   @Column(name = "password")
   private String password;
-//  @OneToOne
-//  @JoinColumn(name = "picture_id")
-//  private Picture userPhoto;
-
+  @OneToOne
+  @JoinColumn(name = "picture_id")
+  private Picture userPhoto;
 }
