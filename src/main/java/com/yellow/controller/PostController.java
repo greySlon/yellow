@@ -28,7 +28,7 @@ public class PostController {
     return postService.getPosts(categoryName, page);
   }
 
-  @RequestMapping(value = "/non-category", method = GET)
+  @RequestMapping(value = "/non-category/{page}", method = GET)
   public AppResponse getPosts(@PathVariable("page") Integer page) {
     return postService.getPostsNonCategory( page);
   }

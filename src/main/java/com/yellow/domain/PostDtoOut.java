@@ -18,17 +18,20 @@ public class PostDtoOut {
   private String postPicture;
   @JsonProperty(value = "post")
   private String content;
+  @JsonProperty(value = "snippet")
+  private String snippet;
 
   public PostDtoOut() {
   }
 
   public PostDtoOut(Post post) {
     PostDtoOut postDtoOut = new PostDtoOut();
-    postDtoOut.setHeader(post.getHeader());
-    postDtoOut.setPostId(post.getId());
+    this.header = post.getHeader();
+    this.postId = post.getId();
     Picture postImage = post.getPostImage();
     String postPicture = postImage == null ? null : postImage.getName();
-    postDtoOut.setPostPicture(postPicture);
+    this.postPicture = postPicture;
+    this.snippet = post.getSnippet();
   }
 }
 

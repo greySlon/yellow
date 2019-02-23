@@ -55,10 +55,14 @@ public class PostService {
     Pageable pageable = new PageRequest(pageNumber, postPerPage);
     Page<Post> page = postRepository.getPostsNonCategorized(pageable);
     List<Post> posts = page.getContent();
+    Integer total = page.getTotalPages();
     List<PostDtoOut> collect = posts.stream()
         .map(p -> new PostDtoOut(p))
         .collect(Collectors.toList());
-    return null;
+    AppResponse appResponse = new AppResponse();
+    appResponse.put("posts", collect);
+    appResponse.put("total_pages", total);
+    return appResponse;
   }
 
   public PostDtoOut getMainPost() {
