@@ -11,15 +11,18 @@ import com.yellow.model.Post;
 import com.yellow.photo.Picture;
 import com.yellow.photo.PictureRepositoryM;
 import com.yellow.repository.PostRepository;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -68,9 +71,14 @@ public class PostService {
   }
 
   public PostDtoOut getMainPost() {
-    Post post = postRepository.getMainPost()
-        .orElseThrow(() -> new AppException("Main Post doesn't exist!!!"));
-    return new PostDtoOut(post);
+    Optional<Post> mainPost = postRepository.getMainPost();
+    if (mainPost.isPresent()) {
+      Post post = mainPost.get();
+      return new PostDtoOut(post);
+    } else {
+      Post lastPost = postRepository.getLastPost(new PageRequest(0, 1)).get(0);
+      return new PostDtoOut(lastPost);
+    }
   }
 
 
@@ -85,10 +93,18 @@ public class PostService {
     String snippet = postDtoIn.getSnippet();
     String categoryName = postDtoIn.getCategory();
     Boolean main = postDtoIn.getMain();
+    if (main) {
+      Optional<Post> mainPost = postRepository.getMainPost();
+      if (mainPost.isPresent()) {
+        Post p = mainPost.get();
+        p.setMainPost(false);
+        postRepository.save(p);
+      }
+    }
     List<Long> ids = postDtoIn.getPictureIds();
     Category category = categoryService.findCategory(categoryName);
 
-    List<Picture> pictures = pictureRepository.findByIdContaining(ids);
+    List<Picture> pictures = pictureRepository.findAllById(ids);
     post.setPostImageList(pictures);
     post.setHeader(header);
     post.setContent(content);

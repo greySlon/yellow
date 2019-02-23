@@ -1,5 +1,5 @@
-INSERT INTO role (id, name) VALUES (1, 'USER_ROLE');
-INSERT INTO role (id, name) VALUES (2, 'ADMIN_ROLE');
+INSERT INTO role (id, name) VALUES (1, 'ADMIN_ROLE');
+INSERT INTO role (id, name) VALUES (2, 'USER_ROLE');
 
 INSERT INTO user (id, login, password, enabled)
 VALUES (1, 'Admin', '$2a$11$CVYsXiVsJIhFDDTOm20Vk.AnTbyB.rbZyYxdYQ2gs1dBC3h9Zkevy', b'1');

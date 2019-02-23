@@ -44,11 +44,7 @@ CREATE TABLE post
   header      VARCHAR(255) NOT NULL,
   main_post   BIT          NOT NULL DEFAULT b'0',
   snippet     VARCHAR(500) NOT NULL,
-  date_time   DATETIME     NOT NULL,
-  user_id     BIGINT       NULL,
   category_id BIGINT       NULL,
-  CONSTRAINT fk_post_user
-  FOREIGN KEY (user_id) REFERENCES user (id),
   CONSTRAINT fk_post_cat
   FOREIGN KEY (category_id) REFERENCES category (id)
 );

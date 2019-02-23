@@ -14,5 +14,4 @@ public interface PictureRepositoryM extends JpaRepository<Picture, Long> {
 
   Page<Picture> findByAltContaining(String part, Pageable pageable);
 
-  List<Picture> findByIdContaining(List<Long> ids);
 }

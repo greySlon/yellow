@@ -41,7 +41,7 @@ public class Post {
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;
-  @Column(name = "date_time")
+  @Column(name = "created")
   private LocalDateTime time;
   @Column(name = "main_post", nullable = false)
   private Boolean mainPost;
