@@ -31,5 +31,8 @@ public class Post {
   @OneToOne
   @JoinColumn(name = "picture_id")
   private Picture postImage;
+  @ManyToOne
+  @JoinColumn(name = "category_id")
+  private Category category;
 
 }
