@@ -18,4 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   @Query("select p from Post p where p.category =?1 order by  p.time")
   Page<Post> getPosts(Category category, Pageable pageable);
+
+  @Query("select p from Post p where p.mainPost = true")
+  Optional<Post> getMainPost();
 }

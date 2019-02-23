@@ -16,6 +16,9 @@ public class PostDtoIn {
   private Category category;
   @JsonProperty(value = "snippet")
   private String snippet;
+  @JsonProperty(value = "main_post")
+  private Boolean main;
+
 
 
 }

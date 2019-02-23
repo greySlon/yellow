@@ -10,6 +10,7 @@ import com.yellow.model.Post;
 import com.yellow.photo.Picture;
 import com.yellow.repository.PostRepository;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,6 +55,11 @@ public class PostService {
     return appResponse;
   }
 
+  public Post getMainPost(){
+    return postRepository.getMainPost().orElseThrow(()-> new AppException("Main Post doesn't exist!!!"));
+  }
+
+
   public void addNewPost(PostDtoIn postDtoIn) {
 
     Post post = new Post();
@@ -62,10 +68,12 @@ public class PostService {
     String content = postDtoIn.getContent();
     String snippet = postDtoIn.getSnippet();
     Category category = postDtoIn.getCategory();
+    Boolean main = postDtoIn.getMain();
     post.setHeader(header);
     post.setContent(content);
     post.setSnippet(snippet);
     post.setCategory(category);
+    post.setMainPost(main);
 
     postRepository.save(post);
   }
