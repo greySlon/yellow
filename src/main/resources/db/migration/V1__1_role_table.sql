@@ -21,7 +21,7 @@ CREATE TABLE user_role (
 INSERT INTO role (id, name) VALUES (1, 'USER_ROLE');
 INSERT INTO role (id, name) VALUES (2, 'ADMIN_ROLE');
 INSERT INTO user (id, login, password, enabled)
-VALUES (1, 'patient', '$2a$11$9o0yeUUZW7f8xjL0Be2uYeAiLNJH1rZHGk.dn8yE/8lMXrshwdOBO', b'1');
+VALUES (1, 'Admin', '$2a$11$CVYsXiVsJIhFDDTOm20Vk.AnTbyB.rbZyYxdYQ2gs1dBC3h9Zkevy', b'1');
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 
 CREATE TABLE category
