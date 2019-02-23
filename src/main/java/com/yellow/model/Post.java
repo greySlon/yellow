@@ -3,20 +3,19 @@ package com.yellow.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import lombok.Data;
-
 import com.yellow.photo.Picture;
-
 import java.time.LocalDateTime;
-
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "post")
@@ -32,9 +31,13 @@ public class Post {
   private String content;
   @Column(name = "snippet", nullable = false, length = 500)
   private String snippet;
-  @OneToOne
-  @JoinColumn(name = "picture_id")
-  private Picture postImage;
+  @OneToMany
+  @JoinTable(
+      name = "post_picture",
+      joinColumns = @JoinColumn(name = "post_id"),
+      inverseJoinColumns = @JoinColumn(name = "picture_id")
+  )
+  private List<Picture> postImageList;
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;

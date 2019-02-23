@@ -1,5 +1,6 @@
 package com.yellow.domain;
 
+import java.util.List;
 import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,8 +12,8 @@ public class PostDtoIn {
   private Long postId;
   @JsonProperty(value = "title")
   private String header;
-  @JsonProperty(value = "img_id")
-  private Long pictureId;
+  @JsonProperty(value = "img_ids")
+  private List<Long> pictureIds;
   @JsonProperty(value = "post")
   private String content;
   @JsonProperty(value = "category")

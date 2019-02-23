@@ -9,8 +9,11 @@ import com.yellow.exception.AppException;
 import com.yellow.model.Category;
 import com.yellow.model.Post;
 import com.yellow.photo.Picture;
+import com.yellow.photo.PictureRepositoryM;
 import com.yellow.repository.PostRepository;
-
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -18,13 +21,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class PostService {
 
+  @Autowired
+  private PictureRepositoryM pictureRepository;
   @Autowired
   private PostRepository postRepository;
   @Autowired
@@ -69,14 +70,7 @@ public class PostService {
   public PostDtoOut getMainPost() {
     Post post = postRepository.getMainPost()
         .orElseThrow(() -> new AppException("Main Post doesn't exist!!!"));
-    PostDtoOut out = new PostDtoOut();
-    out.setHeader(post.getHeader());
-    out.setPostId(post.getId());
-    out.setContent(post.getContent());
-    Picture postImage = post.getPostImage();
-    String imageName = postImage == null ? null : postImage.getName();
-    out.setPostPicture(imageName);
-    return out;
+    return new PostDtoOut(post);
   }
 
 
@@ -91,15 +85,17 @@ public class PostService {
     String snippet = postDtoIn.getSnippet();
     String categoryName = postDtoIn.getCategory();
     Boolean main = postDtoIn.getMain();
+    List<Long> ids = postDtoIn.getPictureIds();
     Category category = categoryService.findCategory(categoryName);
 
+    List<Picture> pictures = pictureRepository.findByIdContaining(ids);
+    post.setPostImageList(pictures);
     post.setHeader(header);
     post.setContent(content);
     post.setSnippet(snippet);
     post.setCategory(category);
     post.setMainPost(main);
     post.setTime(LocalDateTime.now());
-
     postRepository.save(post);
   }
 

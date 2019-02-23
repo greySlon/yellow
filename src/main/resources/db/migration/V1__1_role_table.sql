@@ -52,18 +52,24 @@ CREATE TABLE post
   date_time   DATETIME     NULL,
   post_id     BIGINT       NULL,
   user_id     BIGINT       NULL,
-  category_id BIGINT       NULL,
-  picture_id  BIGINT       NULL
+  category_id BIGINT       NULL
 );
+create table post_picture
+(
+	post_id bigint not null,
+	picture_id bigint not null
+);
+
+create index FK7tst5hc4j29bn95qn2tw9t4ry
+	on yellow.post_picture (post_id);
+
+
 
 CREATE INDEX FK72mt33dhhs48hf9gcqrq4fxte
   ON post (user_id);
 
 CREATE INDEX FKcujdyjmpscm8hpiv70fbafgdb
   ON post (post_id);
-
-CREATE INDEX FKlw8ljyti8buqh3bu8poougxto
-  ON post (picture_id);
 
 CREATE INDEX FKg6l1ydp1pwkmyj166teiuov1b
   ON post (category_id);

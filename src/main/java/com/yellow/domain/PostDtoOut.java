@@ -1,5 +1,7 @@
 package com.yellow.domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,8 +16,8 @@ public class PostDtoOut {
   private Long postId;
   @JsonProperty(value = "title")
   private String header;
-  @JsonProperty(value = "img")
-  private String postPicture;
+  @JsonProperty(value = "img_list")
+  private List<String> postPictures;
   @JsonProperty(value = "post")
   private String content;
   @JsonProperty(value = "snippet")
@@ -27,9 +29,9 @@ public class PostDtoOut {
   public PostDtoOut(Post post) {
     this.header = post.getHeader();
     this.postId = post.getId();
-    Picture postImage = post.getPostImage();
-    String postPicture = postImage == null ? null : postImage.getName();
-    this.postPicture = postPicture;
+    this.postPictures = post.getPostImageList().stream()
+        .map(p -> p.getName())
+        .collect(Collectors.toList());
     this.snippet = post.getSnippet();
     this.content = post.getContent();
   }
