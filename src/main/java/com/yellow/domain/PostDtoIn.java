@@ -13,7 +13,7 @@ public class PostDtoIn {
   @JsonProperty(value = "post")
   private String content;
   @JsonProperty(value = "category")
-  private Category category;
+  private String category;
   @JsonProperty(value = "snippet")
   private String snippet;
   @JsonProperty(value = "main_post")
