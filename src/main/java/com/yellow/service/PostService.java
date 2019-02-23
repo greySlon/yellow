@@ -79,9 +79,11 @@ public class PostService {
   }
 
 
-  public void addNewPost(PostDtoIn postDtoIn) {
-
-    Post post = new Post();
+  public void addOrUpdatePost(PostDtoIn postDtoIn) {
+    Long postId = postDtoIn.getPostId();
+    Post post = (postId != null)
+        ? postRepository.getById(postId).orElseThrow(() -> new AppException("post not found"))
+        : new Post();
 
     String header = postDtoIn.getHeader();
     String content = postDtoIn.getContent();
@@ -104,7 +106,7 @@ public class PostService {
     return postRepository.getById(postId).orElseThrow(() -> new AppException("no post found"));
   }
 
-  public PostDtoOut getOnePost(Long postId){
+  public PostDtoOut getOnePost(Long postId) {
     Post post = this.findPost(postId);
     return new PostDtoOut(post);
   }

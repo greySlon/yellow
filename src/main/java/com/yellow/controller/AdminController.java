@@ -3,12 +3,11 @@ package com.yellow.controller;
 import com.yellow.domain.PostDtoIn;
 import com.yellow.photo.Picture;
 import com.yellow.photo.PictureService;
-
 import com.yellow.service.PostService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +29,9 @@ public class AdminController {
   @Autowired
   private PostService postService;
 
-  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  @RequestMapping(value = {"/post/add", "/post/update"}, method = RequestMethod.POST)
   public void create(@RequestBody PostDtoIn postDtoIn) {
-    postService.addNewPost(postDtoIn);
+    postService.addOrUpdatePost(postDtoIn);
   }
 
   @RequestMapping(value = "/photo/upload", method = RequestMethod.POST)

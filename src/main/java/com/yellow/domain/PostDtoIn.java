@@ -1,11 +1,14 @@
 package com.yellow.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yellow.model.Category;
 import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
 public class PostDtoIn {
+
+  @JsonProperty(value = "post_id")
+  private Long postId;
   @JsonProperty(value = "title")
   private String header;
   @JsonProperty(value = "img_id")
@@ -18,7 +21,6 @@ public class PostDtoIn {
   private String snippet;
   @JsonProperty(value = "main_post")
   private Boolean main;
-
 
 
 }
