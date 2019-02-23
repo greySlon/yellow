@@ -1,7 +1,9 @@
 package com.yellow.service;
 
+
 import com.yellow.domain.AppResponse;
-import com.yellow.domain.PostDto;
+import com.yellow.domain.PostDtoIn;
+import com.yellow.domain.PostDtoOut;
 import com.yellow.model.Category;
 import com.yellow.model.Post;
 import com.yellow.photo.Picture;
@@ -33,15 +35,15 @@ public class PostService {
     List<Post> posts = page.getContent();
     Integer total = page.getTotalPages();
 
-    List<PostDto> collect = posts.stream()
+    List<PostDtoOut> collect = posts.stream()
         .map(p -> {
-          PostDto postDto = new PostDto();
-          postDto.setHeader(p.getHeader());
-          postDto.setPostId(p.getId());
+          PostDtoOut postDtoOut = new PostDtoOut();
+          postDtoOut.setHeader(p.getHeader());
+          postDtoOut.setPostId(p.getId());
           Picture postImage = p.getPostImage();
           String postPicture = postImage == null ? null : postImage.getName();
-          postDto.setPostPicture(postPicture);
-          return postDto;
+          postDtoOut.setPostPicture(postPicture);
+          return postDtoOut;
         })
         .collect(Collectors.toList());
 
@@ -49,5 +51,21 @@ public class PostService {
     appResponse.put("posts", collect);
     appResponse.put("total_pages", total);
     return appResponse;
+  }
+
+  public void addNewPost(PostDtoIn postDtoIn) {
+
+    Post post = new Post();
+
+    String header = postDtoIn.getHeader();
+    String content = postDtoIn.getContent();
+    String snippet = postDtoIn.getSnippet();
+    Category category = postDtoIn.getCategory();
+    post.setHeader(header);
+    post.setContent(content);
+    post.setSnippet(snippet);
+    post.setCategory(category);
+
+    postRepository.save(post);
   }
 }
