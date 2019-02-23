@@ -22,3 +22,67 @@ INSERT INTO role (id, name) VALUES (1, 'USER_ROLE');
 INSERT INTO user (id, login, password, enabled)
 VALUES (1, 'patient', '$2a$11$9o0yeUUZW7f8xjL0Be2uYeAiLNJH1rZHGk.dn8yE/8lMXrshwdOBO', b'1');
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+
+CREATE TABLE category
+(
+  id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE picture
+(
+  id       BIGINT AUTO_INCREMENT
+    PRIMARY KEY,
+  attr_alt VARCHAR(255) NOT NULL,
+  name     VARCHAR(255) NOT NULL,
+  CONSTRAINT UK_uniqe
+  UNIQUE (name)
+);
+
+CREATE TABLE post
+(
+  id          BIGINT AUTO_INCREMENT
+    PRIMARY KEY,
+  created     DATETIME     NULL,
+  text        TEXT         NOT NULL,
+  content     TEXT         NOT NULL,
+  header      VARCHAR(255) NOT NULL,
+  main_post   BIT          NOT NULL,
+  snippet     VARCHAR(500) NOT NULL,
+  date_time   DATETIME     NULL,
+  post_id     BIGINT       NULL,
+  user_id     BIGINT       NULL,
+  category_id BIGINT       NULL,
+  picture_id  BIGINT       NULL
+);
+
+CREATE INDEX FK72mt33dhhs48hf9gcqrq4fxte
+  ON post (user_id);
+
+CREATE INDEX FKcujdyjmpscm8hpiv70fbafgdb
+  ON post (post_id);
+
+CREATE INDEX FKlw8ljyti8buqh3bu8poougxto
+  ON post (picture_id);
+
+CREATE INDEX FKg6l1ydp1pwkmyj166teiuov1b
+  ON post (category_id);
+
+CREATE TABLE comment
+(
+  id      BIGINT AUTO_INCREMENT
+    PRIMARY KEY,
+  created DATETIME NULL,
+  text    TEXT     NOT NULL,
+  post_id BIGINT   NOT NULL,
+  user_id BIGINT   NOT NULL
+);
+
+CREATE INDEX FK8kcum44fvpupyw6f5baccx25c
+  ON comment (user_id);
+
+CREATE INDEX FKs1slvnkuemjsq2kj4h3vhx7i1
+  ON comment (post_id);
+
+
+

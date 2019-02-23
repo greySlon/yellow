@@ -40,7 +40,7 @@ public class Post {
   private Category category;
   @Column(name = "date_time")
   private LocalDateTime time;
-  @Column(name = "main_post", nullable = false, columnDefinition = "not null default b'0'")
+  @Column(name = "main_post", nullable = false)
   private Boolean mainPost;
 
 }
