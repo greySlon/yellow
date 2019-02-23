@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import com.yellow.domain.AppResponse;
 import com.yellow.domain.PostDtoIn;
 import com.yellow.domain.PostDtoOut;
+import com.yellow.model.Post;
 import com.yellow.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,8 @@ public class PostController {
     return postService.getMainPost();
   }
 
-  //todo get one post
+  @RequestMapping(value = "/{id}")
+  public PostDtoOut GetOnePost(@PathVariable("id")Long id){
+    return postService.getOnePost(id);
+  }
 }

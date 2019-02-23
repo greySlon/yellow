@@ -25,13 +25,13 @@ public class PostDtoOut {
   }
 
   public PostDtoOut(Post post) {
-    PostDtoOut postDtoOut = new PostDtoOut();
     this.header = post.getHeader();
     this.postId = post.getId();
     Picture postImage = post.getPostImage();
     String postPicture = postImage == null ? null : postImage.getName();
     this.postPicture = postPicture;
     this.snippet = post.getSnippet();
+    this.content = post.getContent();
   }
 }
 

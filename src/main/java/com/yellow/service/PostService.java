@@ -104,4 +104,10 @@ public class PostService {
     return postRepository.getById(postId).orElseThrow(() -> new AppException("no post found"));
   }
 
+  public PostDtoOut getOnePost(Long postId){
+    Post post = this.findPost(postId);
+    return new PostDtoOut(post);
+  }
+
+
 }
