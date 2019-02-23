@@ -30,8 +30,6 @@ public class PostController {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public void create(@RequestBody PostDtoIn postDtoIn) {
     postService.addNewPost(postDtoIn);
-
-
   }
 
 }

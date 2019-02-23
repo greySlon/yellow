@@ -4,6 +4,7 @@ package com.yellow.service;
 import com.yellow.domain.AppResponse;
 import com.yellow.domain.PostDtoIn;
 import com.yellow.domain.PostDtoOut;
+import com.yellow.exception.AppException;
 import com.yellow.model.Category;
 import com.yellow.model.Post;
 import com.yellow.photo.Picture;
@@ -67,5 +68,9 @@ public class PostService {
     post.setCategory(category);
 
     postRepository.save(post);
+  }
+
+  public Post findPost(Long postId) {
+    return postRepository.getById(postId).orElseThrow(() -> new AppException("no post found"));
   }
 }
