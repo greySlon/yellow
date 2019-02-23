@@ -24,6 +24,5 @@ public class CommentController {
       @PathVariable("page") Optional<Integer> pageOpt) {
     Integer page = pageOpt.isPresent() ? pageOpt.get() : 0;
     return commentService.getComments(postId, page);
-
   }
 }
