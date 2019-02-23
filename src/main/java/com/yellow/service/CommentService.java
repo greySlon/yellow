@@ -3,6 +3,7 @@ package com.yellow.service;
 import com.yellow.domain.AppResponse;
 import com.yellow.domain.CommentDto;
 import com.yellow.domain.CommentDtoIn;
+import com.yellow.exception.AppException;
 import com.yellow.model.Comment;
 import com.yellow.model.Post;
 import com.yellow.model.User;
@@ -70,5 +71,12 @@ public class CommentService {
     comment.setUser(user);
     comment.setPost(post);
     commentRepository.save(comment);
+  }
+
+
+  public void deleteComment(Long commentId) {
+    Comment comment = commentRepository.getById(commentId)
+        .orElseThrow(() -> new AppException("no such comment"));
+    commentRepository.delete(comment);
   }
 }

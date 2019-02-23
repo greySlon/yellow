@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "comment")
 public class CommentController {
 
   @Autowired
   private CommentService commentService;
 
-  @RequestMapping(value = "/comment/get/{post_id}/{page}", method = GET)
+  @RequestMapping(value = "/get/{post_id}/{page}", method = GET)
   public AppResponse getComments(
       @PathVariable("post_id") Long postId,
       @PathVariable("page") Optional<Integer> pageOpt) {
@@ -29,9 +30,13 @@ public class CommentController {
     return commentService.getComments(postId, page);
   }
 
-  @RequestMapping(value = "/comment/add", method = POST)
+  @RequestMapping(value = "/add", method = POST)
   public void addComment(@RequestBody CommentDtoIn commentDtoIn) {
     commentService.addComment(commentDtoIn);
   }
-  // todo delete comment
+
+  @RequestMapping(value = "/{comment_id}", method = POST)
+  public void deleteComment(@PathVariable("comment_id") Long commentId) {
+    commentService.deleteComment(commentId);
+  }
 }
