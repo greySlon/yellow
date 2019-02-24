@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DemoApplication {
 
-  @RequestMapping(value = "/", method = GET)
+  @RequestMapping(value = {"/", "/about", "/info"}, method = GET)
   String home() {
     return "index";
   }

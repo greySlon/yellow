@@ -94,25 +94,35 @@ public class PostService {
     String categoryName = postDtoIn.getCategory();
     Boolean main = postDtoIn.getMain();
     if (main) {
-      Optional<Post> mainPost = postRepository.getMainPost();
-      if (mainPost.isPresent()) {
-        Post p = mainPost.get();
-        p.setMainPost(false);
-        postRepository.save(p);
-      }
+      uncheckMain();
     }
     List<Long> ids = postDtoIn.getPictureIds();
     Category category = categoryService.findCategory(categoryName);
 
     List<Picture> pictures = pictureRepository.findAllById(ids);
     post.setPostImageList(pictures);
-    post.setHeader(header);
-    post.setContent(content);
-    post.setSnippet(snippet);
+    if (header != null) {
+      post.setHeader(header);
+    }
+    if (content != null) {
+      post.setContent(content);
+    }
+    if (snippet != null) {
+      post.setSnippet(snippet);
+    }
     post.setCategory(category);
     post.setMainPost(main);
     post.setTime(LocalDateTime.now());
     postRepository.save(post);
+  }
+
+  private void uncheckMain() {
+    Optional<Post> mainPost = postRepository.getMainPost();
+    if (mainPost.isPresent()) {
+      Post p = mainPost.get();
+      p.setMainPost(false);
+      postRepository.save(p);
+    }
   }
 
   public Post findPost(Long postId) {
