@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ResourceController {
 
-  @RequestMapping(value = {"/img/**", "/css/**", "/js/**", "/audio/**", "/gif/**"},method = GET)
+  @RequestMapping(value = {"/img/**"}, method = GET)
   public byte[] getImg(HttpServletRequest request, HttpServletResponse response) {
     try {
       String filename = request.getRequestURI();
