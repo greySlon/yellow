@@ -37,6 +37,7 @@ public class UserService {
   }
 
   public User getUser(Long userId) {
-    return userRepository.getById(userId).orElseThrow(() -> new AppException("user not found"));
+    Optional<User> byId = userRepository.getById(userId);
+    return byId.orElse(null);
   }
 }

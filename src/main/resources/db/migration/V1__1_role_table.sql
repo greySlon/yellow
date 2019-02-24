@@ -1,8 +1,11 @@
 CREATE TABLE user (
-  id       BIGINT                        AUTO_INCREMENT PRIMARY KEY,
-  login    VARCHAR(255) UNIQUE  NOT NULL,
-  password VARCHAR(300)         NOT NULL,
-  enabled  BIT                  NOT NULL DEFAULT b'0'
+  id         BIGINT                        AUTO_INCREMENT PRIMARY KEY,
+  login      VARCHAR(255) UNIQUE  NOT NULL,
+  password   VARCHAR(300)         NOT NULL,
+  enabled    BIT                  NOT NULL DEFAULT b'0',
+  first_name VARCHAR(30)          NOT NULL,
+  last_name  VARCHAR(30)          NOT NULL,
+  picture_id BIGINT               NULL
 );
 
 CREATE TABLE role (
@@ -61,13 +64,16 @@ CREATE TABLE post_picture
 
 CREATE TABLE comment
 (
-  id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-  created DATETIME NULL,
-  text    TEXT     NOT NULL,
-  post_id BIGINT   NOT NULL,
-  user_id BIGINT   NOT NULL,
+  id                BIGINT AUTO_INCREMENT PRIMARY KEY,
+  created           DATETIME NULL,
+  text              TEXT     NOT NULL,
+  post_id           BIGINT   NOT NULL,
+  user_id           BIGINT   NOT NULL,
+  user_commented_id BIGINT   NULL,
   CONSTRAINT fk_comment_post
   FOREIGN KEY (post_id) REFERENCES post (id),
   CONSTRAINT fk_comment_user
-  FOREIGN KEY (user_id) REFERENCES user (id)
+  FOREIGN KEY (user_id) REFERENCES user (id),
+  CONSTRAINT fk_comment_user2
+  FOREIGN KEY (user_commented_id) REFERENCES user (id)
 );

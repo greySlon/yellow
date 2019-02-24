@@ -1,19 +1,22 @@
 package com.yellow;
 
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.web.bind.annotation.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
-@RestController
+@Controller
 public class DemoApplication {
 
-	@GetMapping("/")
-	String home() {
-		return "Spring is here!";
-	}
+  @RequestMapping(value = "/", method = GET)
+  String home() {
+    return "index";
+  }
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(DemoApplication.class, args);
+  }
 }

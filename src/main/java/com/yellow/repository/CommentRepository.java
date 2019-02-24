@@ -2,6 +2,7 @@ package com.yellow.repository;
 
 import com.yellow.model.Comment;
 import com.yellow.model.Post;
+import com.yellow.model.User;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

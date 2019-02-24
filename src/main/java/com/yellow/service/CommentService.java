@@ -1,13 +1,12 @@
 package com.yellow.service;
 
 import com.yellow.domain.AppResponse;
-import com.yellow.domain.CommentDto;
 import com.yellow.domain.CommentDtoIn;
+import com.yellow.domain.CommentDtoOut;
 import com.yellow.exception.AppException;
 import com.yellow.model.Comment;
 import com.yellow.model.Post;
 import com.yellow.model.User;
-import com.yellow.photo.Picture;
 import com.yellow.repository.CommentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,37 +37,34 @@ public class CommentService {
     Post post = postService.findPost(postId);
     Page<Comment> page = commentRepository.getAll(post, pageable);
     List<Comment> comments = page.getContent();
-    List<CommentDto> collect = comments.stream()
-        .map(c -> {
-          CommentDto commentDto = new CommentDto();
-          commentDto.setCreated(c.getCreated());
-          commentDto.setText(c.getText());
-          User user = c.getUser();
-          Picture userPhoto = c.getUser().getUserPhoto();
-          String userPhotoName = user == null ? null : userPhoto.getName();
-          commentDto.setUserPhoto(userPhotoName);
-          String fullName = user.getFirstName() + " " + user.getLastName();
-          commentDto.setFullName(fullName);
-          return commentDto;
-        })
+    List<CommentDtoOut> collect = comments.stream()
+        .map(c -> new CommentDtoOut(c))
         .collect(Collectors.toList());
     AppResponse appResponse = new AppResponse();
     appResponse.put("comments", collect);
     return appResponse;
   }
 
+  private List<Comment> getInnerComment(Comment comment, Post post, Pageable pageable) {
+    Page<Comment> page = commentRepository.getAll(post, pageable);
+    return page.getContent();
+  }
+
   public void addComment(CommentDtoIn commentDtoIn) {
     Long postId = commentDtoIn.getPostId();
     Long userId = commentDtoIn.getUserId();
     String text = commentDtoIn.getText();
+    Long commentedUserId = commentDtoIn.getCommentedUserId();
 
     Post post = postService.findPost(postId);
     User user = userService.getUser(userId);
+    User userCommented = userService.getUser(commentedUserId);
 
     Comment comment = new Comment();
     comment.setCreated(LocalDateTime.now());
     comment.setText(text);
     comment.setUser(user);
+    comment.setUserCommented(userCommented);
     comment.setPost(post);
     commentRepository.save(comment);
   }

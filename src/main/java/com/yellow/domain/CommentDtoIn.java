@@ -9,6 +9,8 @@ public class CommentDtoIn {
 
   @JsonProperty(value = "user_id")
   private Long userId;
+  @JsonProperty(value = "commented_user_id")
+  private Long commentedUserId;
   @JsonProperty(value = "post_id")
   private Long postId;
   @JsonProperty(value = "text")
